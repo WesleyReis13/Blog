@@ -1,18 +1,21 @@
-<!-- app/views/posts/show.html.erb -->
-<h1><%= @post.title %></h1>
-<p><%= @post.content %></p>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title"><%= @post.title %></h2>
+    <p class="card-text"><%= @post.content %></p>
+    <hr>
+    <h5>Comentários:</h5>
+    <% @post.comments.each do |comment| %>
+      <div class="alert alert-secondary">
+        <strong><%= comment.user ? comment.user.name : "Anônimo" %>:</strong>
+        <p><%= comment.content %></p>
+      </div>
+    <% end %>
 
-<h3>Comentários:</h3>
-<% @post.comments.each do |comment| %>
-  <div class="comment">
-    <p><strong><%= comment.user ? comment.user.name : "Anônimo" %>:</strong> <%= comment.content %></p>
+    <%= form_with(model: [@post, @comment], local: true) do |form| %>
+      <div class="mb-3">
+        <%= form.text_area :content, class: "form-control", placeholder: "Deixe um comentário..." %>
+      </div>
+      <%= form.submit "Comentar", class: "btn btn-success" %>
+    <% end %>
   </div>
-<% end %>
-
-<%= form_with(model: [@post, Comment.new], local: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :content, 'Deixe seu comentário' %>
-    <%= form.text_area :content, class: 'form-control' %>
-  </div>
-  <%= form.submit 'Comentar', class: 'btn btn-primary' %>
-<% end %>
+</div>
