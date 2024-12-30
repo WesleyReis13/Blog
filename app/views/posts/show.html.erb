@@ -5,17 +5,24 @@
     <hr>
     <h5>Comentários:</h5>
     <% @post.comments.each do |comment| %>
-      <div class="alert alert-secondary">
-        <strong><%= comment.user ? comment.user.name : "Anônimo" %>:</strong>
-        <p><%= comment.content %></p>
+      <div class="comment">
+        <p><strong><%= comment.user ? comment.user.email : "Anônimo" %>:</strong> <%= comment.content %></p>
       </div>
     <% end %>
+    
 
-    <%= form_with(model: [@post, @comment], local: true) do |form| %>
-      <div class="mb-3">
-        <%= form.text_area :content, class: "form-control", placeholder: "Deixe um comentário..." %>
-      </div>
-      <%= form.submit "Comentar", class: "btn btn-success" %>
+    <%= form_with(model: [ @post, @post.comments.build ], local: true) do |form| %>
+  <div class="form-group">
+    <% if user_signed_in? %>
+      <p><strong>Comentando como: <%= current_user.email %></strong></p>  <!-- Usando o email como identificador -->
+    <% else %>
+      <p><strong>Comentando como: Anônimo</strong></p>
     <% end %>
+    <%= form.label :content, "Deixe seu comentário" %>
+    <%= form.text_area :content, class: "form-control" %>
+  </div>
+  <%= form.submit "Comentar", class: "btn btn-primary" %>
+<% end %>
+
   </div>
 </div>

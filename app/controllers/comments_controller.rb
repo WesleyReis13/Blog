@@ -2,16 +2,18 @@ class CommentsController < ApplicationController
   before_action :set_post
 
   def create
-    # Verifique se o usuário está logado e se não, faça um comentário anônimo
-    @comment = @post.comments.build(comment_params)
-    if current_user
-      @comment.user = current_user  # Associa o comentário ao usuário logado
+    @comment = @post.comments.new(comment_params)
+    
+    @comment.user = current_user if user_signed_in?
+
+    if user_signed_in?
+      @comment.user = current_user
     end
 
     if @comment.save
-      redirect_to @post, notice: 'Comentário enviado com sucesso.'
+      redirect_to @post, notice: 'Comentário criado com sucesso.'
     else
-      redirect_to @post, alert: 'Erro ao enviar o comentário.'
+      redirect_to @post, alert: 'Erro ao criar comentário.'
     end
   end
 
