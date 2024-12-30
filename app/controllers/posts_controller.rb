@@ -50,5 +50,11 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :content)
     end
+
+    def authorize_user!
+      unless @post.user == current_user
+        redirect_to posts_path, alert: 'Você não tem permissão para realizar essa ação.'
+      end
+    end
   end
   

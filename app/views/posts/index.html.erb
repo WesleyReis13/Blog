@@ -1,16 +1,17 @@
 <div class="row">
-  <% @posts.each do |post| %>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= post.title %></h5>
-          <p class="card-text"><%= truncate(post.content, length: 100) %></p>
-          <a href="<%= post_path(post) %>" class="btn btn-primary">Leia Mais</a>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<% @posts.each do |post| %>
+  <div>
+    <h2><%= link_to post.title, post %></h2>
+    <p><%= truncate(post.content, length: 100) %></p>
+    <small>Autor: <%= post.user.email %></small>
+
+    <% if post.user == current_user %>
+      <%= link_to 'Editar', edit_post_path(post), class: 'btn btn-primary' %>
+      <%= link_to 'Excluir', post, method: :delete, data: { confirm: 'Você tem certeza?' }, class: 'btn btn-danger' %>
+    <% end %>
+  </div>
+<% end %>
+
 
 <div class="d-flex justify-content-center">
   <%= paginate @posts %>
