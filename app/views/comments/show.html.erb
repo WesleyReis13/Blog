@@ -1,0 +1,13 @@
+<h2>Comentários</h2>
+<%= form_with model: [ @post, @comment ], local: true do |f| %>
+  <div class="form-group">
+    <%= f.text_area :content, class: 'form-control', placeholder: 'Escreva seu comentário' %>
+  </div>
+  <%= f.submit 'Comentar', class: 'btn btn-success' %>
+<% end %>
+
+<% @post.comments.each do |comment| %>
+  <div class="comment">
+    <p><strong><%= comment.user.email %>:</strong> <%= comment.content %></p>
+  </div>
+<% end %>

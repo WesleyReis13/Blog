@@ -1,0 +1,18 @@
+<!-- app/views/posts/show.html.erb -->
+<h1><%= @post.title %></h1>
+<p><%= @post.content %></p>
+
+<h3>Comentários:</h3>
+<% @post.comments.each do |comment| %>
+  <div class="comment">
+    <p><strong><%= comment.user ? comment.user.name : "Anônimo" %>:</strong> <%= comment.content %></p>
+  </div>
+<% end %>
+
+<%= form_with(model: [@post, Comment.new], local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :content, 'Deixe seu comentário' %>
+    <%= form.text_area :content, class: 'form-control' %>
+  </div>
+  <%= form.submit 'Comentar', class: 'btn btn-primary' %>
+<% end %>
