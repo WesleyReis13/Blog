@@ -50,10 +50,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Adjust bin scripts for Linux
-        run: |
-          chmod +x bin/*
-          sed -i "s/\r$//g" bin/* && sed -i 's/ruby\.exe$/ruby/' bin/*
+      - name: Grant execute permissions to bin scripts
+        run: chmod +x bin/*
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -78,18 +76,14 @@ jobs:
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable
+      - name: Install packages
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable
 
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Adjust bin scripts for Linux
-        run: |
-          chmod +x bin/*
-          sed -i "s/\r$//g" bin/* && sed -i 's/ruby\.exe$/ruby/' bin/*
+      - name: Grant execute permissions to bin scripts
+        run: chmod +x bin/*
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -100,16 +94,13 @@ jobs:
       - name: Run tests
         env:
           RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432
-        run: |
-          bin/rails db:test:prepare
-          bin/rails test
-          bin/rails test:system
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432
+        run: bin/rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: screenshots
-          path: tmp/screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
