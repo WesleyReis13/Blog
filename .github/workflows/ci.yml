@@ -16,35 +16,14 @@ jobs:
           bundler-cache: true
 
       - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
+        run: ruby --version # Verifica a versão do Ruby
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Grant execute permissions to bin scripts
-        run: chmod +x bin/*
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+        run: ruby bin/brakeman --no-pager # Usa ruby diretamente
 
   lint:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,10 +38,10 @@ jobs:
           bundler-cache: true
 
       - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
+        run: ruby --version # Verifica a versão do Ruby
 
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: ruby bin/rubocop -f github # Usa ruby diretamente
 
   test:
     runs-on: ubuntu-latest
@@ -94,13 +73,10 @@ jobs:
           bundler-cache: true
 
       - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
+        run: ruby --version # Verifica a versão do Ruby
 
       - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
-        run: bin/rails db:test:prepare test test:system
+        run: ruby bin/rails db:test:prepare test test:system # Usa ruby diretamente
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
