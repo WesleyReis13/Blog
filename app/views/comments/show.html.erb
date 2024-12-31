@@ -1,4 +1,4 @@
-<h2>Comentarios</h2>
+<h2>Comentários</h2>
 <%= form_with model: [ @post, @comment ], local: true do |f| %>
   <div class="form-group">
     <%= f.text_area :content, class: 'form-control', placeholder: 'Escreva seu comentário' %>
