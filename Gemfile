@@ -45,7 +45,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", require: false
+  gem "brakeman", "~> 7.0.0", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
@@ -54,8 +54,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem 'letter_opener'
-
+  gem "letter_opener"
 end
 
 group :test do
@@ -64,10 +63,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'devise'
-gem 'kaminari'
-gem 'letter_opener_web', group: :development
-
-
-
-
+gem "devise"
+gem "kaminari"
+gem "letter_opener_web", group: :development

@@ -1,3 +1,10 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
@@ -14,9 +21,6 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
 
       - name: Scan for common Rails security vulnerabilities using static analysis
         run: bin/brakeman --no-pager
@@ -37,9 +41,6 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
-
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
 
@@ -57,9 +58,6 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
@@ -92,9 +90,6 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
-
-      - name: Check Ruby version
-        run: ruby --version # Adicionando a verificação aqui
 
       - name: Run tests
         env:
