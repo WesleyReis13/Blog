@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @post.comments.new(comment_params)
-    
+
     @comment.user = current_user if user_signed_in?
 
     if user_signed_in?
@@ -11,9 +11,9 @@ class CommentsController < ApplicationController
     end
 
     if @comment.save
-      redirect_to @post, notice: 'Comentário criado com sucesso.'
+      redirect_to @post, notice: "Comentário criado com sucesso."
     else
-      redirect_to @post, alert: 'Erro ao criar comentário.'
+      redirect_to @post, alert: "Erro ao criar comentário."
     end
   end
 
