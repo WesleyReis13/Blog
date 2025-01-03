@@ -377,6 +377,7 @@ DEPENDENCIES
   kaminari
   letter_opener
   letter_opener_web
+  net-protocol
   pg (~> 1.1)
   propshaft
   puma (>= 5.0)

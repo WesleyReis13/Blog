@@ -66,3 +66,4 @@ end
 gem "devise"
 gem "kaminari"
 gem "letter_opener_web", group: :development
+gem 'net-protocol', '>= 0'
