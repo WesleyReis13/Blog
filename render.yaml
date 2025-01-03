@@ -1,8 +1,10 @@
 databases:
   - name: blog
-    databaseName: blog_app_development
-    user: mysite
+    databaseName: blog_app_ktam
+    user: blog_app_ktam_user
     plan: free
+    envVars:
+      DATABASE_URL: "postgresql://blog_app_ktam_user:yD2o8LhSh80WxUJ6kymsG88iY0BHikSg@dpg-ctrjbd9opnds73dsffc0-a/blog_app_ktam"
 
 services:
   - type: web
