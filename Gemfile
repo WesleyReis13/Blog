@@ -67,3 +67,5 @@ gem "devise"
 gem "kaminari"
 gem "letter_opener_web", group: :development
 gem 'net-protocol', '>= 0'
+gem 'net-smtp', '~> 0.5.0'
+
