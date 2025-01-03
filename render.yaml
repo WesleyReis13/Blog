@@ -1,5 +1,5 @@
 databases:
-  - name: myblog
+  - name: blog
     databaseName: blog_app_development
     user: postgres
     plan: free
