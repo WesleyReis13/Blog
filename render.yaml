@@ -1,6 +1,6 @@
 databases:
-  - name: blog
-    databaseName: blog_app_development
+  - name: mysite
+    databaseName: mysite
     user: postgres
     plan: free
 
